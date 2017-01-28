@@ -2,9 +2,7 @@
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 const vtoken = process.env.FB_VERIFY_ACCESS_TOKEN
-
-'use strict'
-
+const apiai=require('apiai')
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
