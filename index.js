@@ -50,8 +50,8 @@ app.post('/webhook/', function (req, res) {
             });
 
             request.on('response', function(response) {
-
-              var ans=response.result.fulfillment.speech;
+                    var temp=JSON.parse(response);
+              var ans=temp.result.fulfillment.speech;
                     //action
               sendTextMessage(sender, ans)
             });
