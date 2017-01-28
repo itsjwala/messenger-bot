@@ -51,7 +51,7 @@ app.post('/webhook/', function (req, res) {
 
             request.on('response', function(response) {
                 console.log(response);
-              var ans=JSON.stringify(response);
+              var ans=response;
                     //action
               sendTextMessage(sender, ans)
             });
