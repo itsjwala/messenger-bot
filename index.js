@@ -2,11 +2,14 @@
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 const vtoken = process.env.FB_VERIFY_ACCESS_TOKEN
-//const apiai=require('apiai')
 const express = require('express')
+const apiai=require('apiai')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
+const apiai = require('apiai');
+
+const apiaiapp = apiai("2ad98b4ef4a6487e82c5ebcd71f53065");
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -40,7 +43,26 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text
-            sendTextMessage(sender, text.substring(0, 200))
+
+
+      /***************************************/
+            var request = apiaiapp.textRequest(text, {
+                sessionId: 'abcdefg'
+            });
+
+            request.on('response', function(response) {
+                console.log(response);
+              var ans=JSON.stringify(response.result.parameters);
+                    //action
+              sendTextMessage(sender, ans)
+            });
+
+            request.on('error', function(error) {
+                console.log(error);
+            });
+
+            //request.end();
+    /************************************************/
         }
     }
     res.sendStatus(200)
@@ -63,22 +85,3 @@ function sendTextMessage(sender, text) {
         }
     })
 }
-/*
-var apiai = require('apiai');
-
-var app = apiai("2ad98b4ef4a6487e82c5ebcd71f53065");
-
-var request = app.textRequest('hello', {
-    sessionId: 'abcdefg'
-});
-
-request.on('response', function(response) {
-    console.log(response);
-});
-
-request.on('error', function(error) {
-    console.log(error);
-});
-
-request.end();
-*/
