@@ -7,7 +7,6 @@ const apiai=require('apiai')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
-const apiai = require('apiai');
 
 const apiaiapp = apiai("2ad98b4ef4a6487e82c5ebcd71f53065");
 
