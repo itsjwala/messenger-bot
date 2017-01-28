@@ -50,8 +50,8 @@ app.post('/webhook/', function (req, res) {
             });
 
             request.on('response', function(response) {
-                console.log(response);
-              var ans=response;
+
+              var ans=response.result.fulfillment.speech;
                     //action
               sendTextMessage(sender, ans)
             });
@@ -69,7 +69,7 @@ app.post('/webhook/', function (req, res) {
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
     request({
-      
+
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
         method: 'POST',
