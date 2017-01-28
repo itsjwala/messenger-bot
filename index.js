@@ -33,16 +33,6 @@ app.get('/webhook/', function (req, res) {
 app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
-app.post('/webhook/', function (req, res) {
-    let messaging_events = req.body.entry[0].messaging
-     for (let i = 0; i < messaging_events.length; i++) {
-        let event = req.body.entry[0].messaging[i]
-        let sender = event.sender.id
-        if (event.message && event.message.text) {
-            let text = event.message.text
-            sendTextMessage(sender, text.substring(0, 200))
-        }
-    }
     res.sendStatus(200)
 })
 function sendTextMessage(sender, text) {
@@ -63,3 +53,20 @@ function sendTextMessage(sender, text) {
         }
     })
 }
+var apiai = require('apiai');
+
+var app = apiai("2ad98b4ef4a6487e82c5ebcd71f53065");
+
+var request = app.textRequest('hello', {
+    sessionId: 'abcdefg'
+});
+
+request.on('response', function(response) {
+    console.log(response);
+});
+
+request.on('error', function(error) {
+    console.log(error);
+});
+
+request.end();
