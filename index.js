@@ -74,13 +74,8 @@ app.post('/webhook/', function (req, res) {
 })
 
 function sendTextMessage(sender, text) {
-     let contentlength=Buffer.byteLength(messageData);
     let messageData = { text:text }
     request({
-          headers:{
-            'Content-Type':'application/json',
-            'Content-Length':contentlength
-          },
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
         method: 'POST',
