@@ -51,6 +51,8 @@ app.post('/webhook/', function (req, res) {
 
             request.on('response', function(response) {
                     var temp=JSON.parse(response);
+
+                    console.log(temp);
               var ans=temp.result.fulfillment.speech;
                     //action
               sendTextMessage(sender, ans)
