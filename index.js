@@ -37,11 +37,11 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 app.post('/webhook/', function (req, res) {
-   console.log('REQUEST'+JSON.stringify(req));
-   console.log('REQUEST'+JSON.stringify(res));
+  // console.log('REQUEST'+JSON.stringify(req));
+   //console.log('REQUEST'+JSON.stringify(res));
 
   //  res.send( req.body.entry[0].messaging);
-  //console.log(req.body.result.fulfillment.speech);
+  console.log(req.body.result.fulfillment.speech);
 //    let messaging_events =
 //     for (let i = 0; i < messaging_events.length; i++) {
 //        let event = req.body.entry[0].messaging[i]
@@ -57,7 +57,7 @@ app.post('/webhook/', function (req, res) {
 
             request.on('response', function(response) {
                     //var temp=JSON.parse(response);
-                      response.send("from apiai");
+                      console.log("from apiai");
               //var ans=response.result.fulfillment.speech;
                     //action
               //sendTextMessage(sender, text)
