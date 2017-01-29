@@ -41,7 +41,7 @@ app.post('/webhook/', function (req, res) {
   //console.log(req.body);
      let messaging_events =req.body.entry[0].messaging;
       //   console.log("messenger message;"+JSON.stringify(req.body.entry[0].messaging));
-    try {
+
 
      for (let i = 0; i < messaging_events.length; i++) {
          let event = req.body.entry[0].messaging[i]
@@ -68,27 +68,8 @@ app.post('/webhook/', function (req, res) {
 
                    requestApiai.end();
 
-           }
-         }
-     res.sendStatus(200)  }
-        }
-        catch (e){
-          requestApiai.on('response', function(response) {
-               sendTextMessage(messengerId,response.result.fulfillment.speech);
-               console.log(response);
-           });
-
-
-          requestApiai.on('error', function(error) {
-              console.log(error);
-          });
-
-                requestApiai.end();
-
-
-        } finally {
-
-        }
+           }//end of if block
+         }//end of for loop
 
 })
 
