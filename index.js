@@ -1,5 +1,5 @@
 'use strict'
-
+console.log("Hi");
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 const vtoken = process.env.FB_VERIFY_ACCESS_TOKEN
 const express = require('express')
@@ -20,6 +20,7 @@ app.use(bodyParser.json())
 
 // Index route
 app.get('/', function (req, res) {
+   console.log(req.body);
     res.send('Hello world, I am a chat bot')
 })
 
@@ -36,36 +37,37 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 app.post('/webhook/', function (req, res) {
-    let messaging_events = req.body.entry[0].messaging
-     for (let i = 0; i < messaging_events.length; i++) {
-        let event = req.body.entry[0].messaging[i]
-        let sender = event.sender.id
-        if (event.message && event.message.text) {
-            let text = event.message.text
 
+  console.log(req.body.result.fulfillment.speech);
+//    let messaging_events = req.body.entry[0].messaging
+//     for (let i = 0; i < messaging_events.length; i++) {
+//        let event = req.body.entry[0].messaging[i]
+//        let sender = event.sender.id
+//        if (event.message && event.message.text) {
+            let text = req.body.result.fulfillment.speech;//event.message.text
+            let sessionIdOfUser=req.body.sessionId;
 
       /***************************************/
             var request = apiaiapp.textRequest(text, {
-                sessionId: 'abcdefg'
+                sessionId: sessionIdOfUser//'abcdefg'
             });
 
             request.on('response', function(response) {
-                    var temp=JSON.parse(response);
+                    //var temp=JSON.parse(response);
 
-                    console.log(temp);
-              var ans=temp.result.fulfillment.speech;
+              //var ans=response.result.fulfillment.speech;
                     //action
-              sendTextMessage(sender, ans)
+              //sendTextMessage(sender, text)
             });
-
+sendTextMessage(sender, text)
             request.on('error', function(error) {
                 console.log(error);
             });
 
-            //request.end();
+            request.end();
     /************************************************/
-        }
-    }
+//        }
+//    }
     res.sendStatus(200)
 })
 function sendTextMessage(sender, text) {
