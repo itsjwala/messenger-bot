@@ -1,5 +1,5 @@
 'use strict'
-console.log("Hi");
+//console.log("Hi");
 const token = process.env.FB_PAGE_ACCESS_TOKEN
 const vtoken = process.env.FB_VERIFY_ACCESS_TOKEN
 const express = require('express')
@@ -37,15 +37,18 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 app.post('/webhook/', function (req, res) {
+   console.log('REQUEST'+req);
+   console.log('REQUEST'+res);
 
-  console.log(req.body.result.fulfillment.speech);
-//    let messaging_events = req.body.entry[0].messaging
+  //  res.send( req.body.entry[0].messaging);
+  //console.log(req.body.result.fulfillment.speech);
+//    let messaging_events =
 //     for (let i = 0; i < messaging_events.length; i++) {
 //        let event = req.body.entry[0].messaging[i]
 //        let sender = event.sender.id
 //        if (event.message && event.message.text) {
-            let text = req.body.result.fulfillment.speech;//event.message.text
-            let sessionIdOfUser=req.body.sessionId;
+            let text ="hello"// req.body.result.fulfillment.speech;//event.message.text
+          //  let sessionIdOfUser=req.body.sessionId;
 
       /***************************************/
             var request = apiaiapp.textRequest(text, {
@@ -54,12 +57,12 @@ app.post('/webhook/', function (req, res) {
 
             request.on('response', function(response) {
                     //var temp=JSON.parse(response);
-
+                      response.send("from apiai");
               //var ans=response.result.fulfillment.speech;
                     //action
               //sendTextMessage(sender, text)
             });
-sendTextMessage(sender, text)
+            // sendTextMessage(sender, text)
             request.on('error', function(error) {
                 console.log(error);
             });
@@ -69,7 +72,7 @@ sendTextMessage(sender, text)
 //        }
 //    }
     res.sendStatus(200)
-})
+})/*
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
     request({
@@ -92,3 +95,4 @@ function sendTextMessage(sender, text) {
         }
     })
 }
+*/
