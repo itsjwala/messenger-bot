@@ -48,7 +48,7 @@ app.post('/webhook/Apiai',function(response){
       requestApiai.end();
 
 })
-app.post('/webhookMessenger/', function (req, res) {
+app.post('/webhook/', function (req, res) {
 
 
      let messaging_events =req.body.entry[0].messaging;
