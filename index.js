@@ -59,7 +59,7 @@ app.post('/webhook/', function (req, res) {
        if (event.message && event.message.text) {
             let text =event.message.text;
              messengerId=sender;
-
+           console.log("text to apiai;;"+text);
 
             requestApiai = apiaiapp.textRequest(text, {
                 sessionId: 'abcdefg'
