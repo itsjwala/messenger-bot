@@ -41,14 +41,14 @@ app.post('/webhook/', function (req, res) {
    //console.log('REQUEST'+JSON.stringify(res));
 
   //  res.send( req.body.entry[0].messaging);
-  console.log(req.body.result.fulfillment.speech);
+  console.log(req.body);//.result.fulfillment.speech);
 //    let messaging_events =
 //     for (let i = 0; i < messaging_events.length; i++) {
 //        let event = req.body.entry[0].messaging[i]
 //        let sender = event.sender.id
 //        if (event.message && event.message.text) {
             let text ="hello"// req.body.result.fulfillment.speech;//event.message.text
-          //  let sessionIdOfUser=req.body.sessionId;
+            let sessionIdOfUser=req.body.sessionId;
 
       /***************************************/
             var request = apiaiapp.textRequest(text, {
