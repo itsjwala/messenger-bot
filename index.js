@@ -35,42 +35,61 @@ app.get('/webhook/', function (req, res) {
 app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
-app.post('/webhook/Apiai',function(response){
-     requestApiai.on('response', function(response) {
-          sendTextMessage(messengerId,response.result.fulfillment.speech);
-          console.log(response);
-      });
 
-      requestApiai.on('error', function(error) {
-          console.log(error);
-      });
-
-      requestApiai.end();
-
-})
 app.post('/webhook/', function (req, res) {
 
   //console.log(req.body);
      let messaging_events =req.body.entry[0].messaging;
       //   console.log("messenger message;"+JSON.stringify(req.body.entry[0].messaging));
+    try {
+
      for (let i = 0; i < messaging_events.length; i++) {
-        let event = req.body.entry[0].messaging[i]
-        let sender = event.sender.id
-       if (event.message && event.message.text) {
-            let text =event.message.text;
-             messengerId=sender;
-          // console.log("text to apiai;;"+text);
+         let event = req.body.entry[0].messaging[i]
+         let sender = event.sender.id
+        if (event.message && event.message.text) {
+             let text =event.message.text;
+              messengerId=sender;
+           // console.log("text to apiai;;"+text);
 
-            requestApiai = apiaiapp.textRequest(text, {
-                sessionId: 'abcdefg'
-            });
-            requestApiai.on('error', function(error) {
-                console.log(error);
-            });
+             requestApiai = apiaiapp.textRequest(text, {
+                 sessionId: 'abcdefg'
+             });
 
-          }
+             console.log(requestApiai);
+             requestApiai.on('response', function(response) {
+                  sendTextMessage(messengerId,response.result.fulfillment.speech);
+                  console.log(response);
+              });
+
+
+             requestApiai.on('error', function(error) {
+                 console.log(error);
+             });
+
+                   requestApiai.end();
+
+           }
+         }
+     res.sendStatus(200)  }
         }
-    res.sendStatus(200)
+        catch (e){
+          requestApiai.on('response', function(response) {
+               sendTextMessage(messengerId,response.result.fulfillment.speech);
+               console.log(response);
+           });
+
+
+          requestApiai.on('error', function(error) {
+              console.log(error);
+          });
+
+                requestApiai.end();
+
+
+        } finally {
+
+        }
+
 })
 
 function sendTextMessage(sender, text) {
