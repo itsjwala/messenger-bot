@@ -69,7 +69,7 @@ app.post('/webhook/', function (req, res) {
                    requestApiai.end();
 
            }//end of if block
-         }//end of for loop
+         }//end of for loop//end this for loooooooooooooooooooooooooooooooooooooooop
 
 })
 
